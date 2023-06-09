@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>English Class</title>
+    <!-- Include Bootstrap styles -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <style>
+      /* Add custom styles here */
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        padding: 20px;
+        background-color: #f0f0f0; /* Color de fondo */
+        color: #003366; /* Color de texto */
+        font-size: 2rem; /* Tamaño de letra grande (2rem) */
+        text-align: center; /* Centrar el texto */
+      }
+
+      #tema-actual {
+        margin-bottom: 20px;
+      }
+
+      #preguntas {
+        margin-bottom: 20px;
+      }
+
+      #cambiar-tema {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="tema-actual" class="mt-4">
+        <!-- The current conversation topic will be displayed here -->
+      </div>
+
+      <div id="preguntas">
+        <!-- The related questions will be displayed here -->
+      </div>
+
+      <button id="cambiar-tema" class="btn btn-primary">Change Topic</button>
+
+      <script>
+        // Array of conversation topics
+        var conversationTopics = [
+          {
+            tema: 'Technology',
+            preguntas: [
+              'What is the latest technological advancement that impresses you?',
+              'How has technology changed your life?',
+              'What are your favorite gadgets?',
+            ],
+          },
+          {
+            tema: 'Travel',
+            preguntas: [
+              'What is your dream travel destination?',
+              'Have you ever traveled alone? If so, how was your experience?',
+              'What is the most memorable trip you have taken?',
+            ],
+          },
+          {
+            tema: 'Sports',
+            preguntas: [
+              'What is your favorite sport and why?',
+              'Have you ever attended a live sports event? How was the experience?',
+              'Do you play any sports? If so, which ones?',
+            ],
+          },
+          {
+            tema: 'Movies',
+            preguntas: [
+              'What is your favorite movie of all time?',
+              'Do you prefer watching movies at home or in the theater?',
+              'Who is your favorite actor or actress?',
+            ],
+          },
+          {
+            tema: 'Food',
+            preguntas: [
+              'What is your favorite type of cuisine?',
+              'Have you ever tried any exotic or unusual foods?',
+              'What is the best dish you can cook?',
+            ],
+          },
+          {
+            tema: 'Books',
+            preguntas: [
+              'What is the last book you read and enjoyed?',
+              'Do you prefer physical books or e-books?',
+              'Who is your favorite author?',
+            ],
+          },
+          {
+            tema: 'Music',
+            preguntas: [
+              'What is your favorite genre of music?',
+              'Who is your favorite musician or band?',
+              'Do you play any musical instruments?',
+            ],
+          },
+          {
+            tema: 'Hobbies',
+            preguntas: [
+              'What are your favorite hobbies or activities?',
+              'Have you ever tried any unusual or unique hobbies?',
+              'Do you prefer indoor or outdoor activities?',
+            ],
+          },
+          {
+            tema: 'Work',
+            preguntas: [
+              'What do you do for a living?',
+              'Do you enjoy your job? Why or why not?',
+              'What is your dream job?',
+            ],
+          },
+          {
+            tema: 'Fashion',
+            preguntas: [
+              'How would you describe your personal style?',
+              'Do you follow any fashion trends?',
+              'What is your favorite clothing item?',
+            ],
+          },
+          {
+            tema: 'Education',
+            preguntas: [
+              'What is your favorite subject in school?',
+              'Have you ever taken any online courses or attended workshops?',
+              'What is the most interesting thing you have learned recently?',
+            ],
+          },
+          {
+            tema: 'Health',
+            preguntas: [
+              'What do you do to stay healthy?',
+              'Do you have any favorite workouts or exercises?',
+              'What is your favorite healthy food?',
+            ],
+          },
+          {
+            tema: 'Art',
+            preguntas: [
+              'Do you enjoy any form of art (painting, sculpture, music, etc.)?',
+              'Have you ever created any artwork yourself?',
+              'Who is your favorite artist?',
+            ],
+          },
+          {
+            tema: 'Family',
+            preguntas: [
+              'Tell me about your family.',
+              'Do you have any siblings? How many?',
+              'What is your favorite family tradition?',
+            ],
+          },
+          {
+            tema: 'Nature',
+            preguntas: [
+              'Do you enjoy spending time in nature?',
+              'What is your favorite outdoor activity?',
+              'Have you ever been camping or hiking?',
+            ],
+          },
+          {
+            tema: 'Languages',
+            preguntas: [
+              'How many languages do you speak?',
+              'What language would you like to learn in the future?',
+              "Have you ever traveled to a country where you didn't speak the language?",
+            ],
+          },
+          {
+            tema: 'Pets',
+            preguntas: [
+              'Do you have any pets?',
+              'What is your favorite animal?',
+              'Have you ever had any unusual or exotic pets?',
+            ],
+          },
+          {
+            tema: 'Celebrations',
+            preguntas: [
+              'What is your favorite holiday or celebration?',
+              'How do you usually celebrate your birthday?',
+              "Do you have any special traditions for New Year's Eve?",
+            ],
+          },
+          {
+            tema: 'Dreams',
+            preguntas: [
+              'Do you often remember your dreams?',
+              "What is the most interesting or memorable dream you've ever had?",
+              'Do you believe dreams have meanings?',
+            ],
+          },
+          {
+            tema: 'Environment',
+            preguntas: [
+              'What do you do to help protect the environment?',
+              'Have you ever participated in any environmental conservation activities?',
+              'What is the most pressing environmental issue in your opinion?',
+            ],
+          },
+          {
+            tema: 'History',
+            preguntas: [
+              'What is your favorite historical era?',
+              'Have you ever visited any historical landmarks or sites?',
+              'Which historical figure do you find most interesting?',
+            ],
+          },
+          {
+            tema: 'Relationships',
+            preguntas: [
+              'What is the key to a successful relationship?',
+              'What is the most important quality you look for in a partner?',
+              'What is the best relationship advice you have ever received?',
+            ],
+          },
+          {
+            tema: 'Dreams and Goals',
+            preguntas: [
+              'What is your biggest dream or aspiration?',
+              'Do you have any short-term goals you are currently working towards?',
+              'How do you stay motivated to achieve your goals?',
+            ],
+          },
+          {
+            tema: 'Movies and TV Shows',
+            preguntas: [
+              'What is your favorite movie or TV show genre?',
+              'Have you ever binge-watched a TV series? If so, which one?',
+              'Who is your favorite actor or actress of all time?',
+            ],
+          },
+          {
+            tema: 'Science',
+            preguntas: [
+              'What is your favorite branch of science?',
+              'Are you interested in any scientific discoveries or breakthroughs?',
+              'Have you ever conducted any science experiments?',
+            ],
+          },
+          {
+            tema: 'Music',
+            preguntas: [
+              'What is your favorite music genre and why?',
+              'Do you prefer listening to music alone or with others?',
+              'Have you ever been to a live concert? Tell me about your experience.',
+            ],
+          },
+          {
+            tema: 'Technology',
+            preguntas: [
+              'What is the most recent technological innovation that caught your attention?',
+              'How has technology changed the way you communicate with others?',
+              'Do you consider yourself a tech-savvy person? Why or why not?',
+            ],
+          },
+          {
+            tema: 'Food',
+            preguntas: [
+              "What is your favorite dish from your country's cuisine?",
+              'Do you enjoy cooking? What is your signature dish?',
+              'Have you ever tried any exotic or unusual foods? How was your experience?',
+            ],
+          },
+          {
+            tema: 'Books',
+            preguntas: [
+              'Who is your favorite author and why?',
+              'What is the last book you read that left a lasting impression on you?',
+              'Do you prefer reading physical books or e-books? Why?',
+            ],
+          },
+          {
+            tema: 'Movies',
+            preguntas: [
+              'What is your all-time favorite movie and why?',
+              'Do you prefer watching movies at home or in the theater? Why?',
+              'Who is your favorite actor or actress? What do you like about their performances?',
+            ],
+          },
+          {
+            tema: 'Sports',
+            preguntas: [
+              'Do you enjoy playing or watching sports? Which ones?',
+              'Have you ever participated in any sports competitions?',
+              'What is the most memorable sporting event you have witnessed?',
+            ],
+          },
+          {
+            tema: 'Travel',
+            preguntas: [
+              'What is your dream travel destination and why?',
+              'Have you ever traveled to a foreign country? Share your favorite travel experience.',
+              'Do you prefer traveling alone or with companions? Why?',
+            ],
+          },
+          {
+            tema: 'Education',
+            preguntas: [
+              'What is the most valuable lesson you have learned in your life?',
+              'Have you ever taken any online courses or attended workshops? How was your experience?',
+              'If you could study anything, regardless of practicality, what would it be?',
+            ],
+          },
+          {
+            tema: 'Art',
+            preguntas: [
+              'Do you enjoy any form of art (painting, photography, sculpture, etc.)?',
+              'Have you ever visited an art gallery or museum? Which one was your favorite?',
+              'If you could have any artwork in your home, what would it be?',
+            ],
+          },
+          {
+            tema: 'Work',
+            preguntas: [
+              'What do you do for a living? Do you enjoy your job?',
+              'What is the most challenging aspect of your work?',
+              'If you could have any job in the world, what would it be and why?',
+            ],
+          },
+          {
+            tema: 'Fashion',
+            preguntas: [
+              'How would you describe your personal style?',
+              'Do you follow fashion trends or prefer to create your own style?',
+              'What is your favorite clothing item in your wardrobe?',
+            ],
+          },
+          {
+            tema: 'Health',
+            preguntas: [
+              'What do you do to maintain a healthy lifestyle?',
+              'Do you have any favorite exercises or workout routines?',
+              'How do you manage stress in your daily life?',
+            ],
+          },
+          {
+            tema: 'Relationships',
+            preguntas: [
+              'What do you think is the key to a successful relationship?',
+              'Have you ever had a long-distance relationship? Share your experience.',
+              'What is the most memorable romantic gesture you have received or given?',
+            ],
+          },
+          {
+            tema: 'Nature',
+            preguntas: [
+              'Do you enjoy spending time in nature? What activities do you like to do?',
+              'Have you ever been on a camping trip? Share your favorite camping experience.',
+              'What is the most beautiful natural landscape you have ever seen?',
+            ],
+          },
+          {
+            tema: 'Languages',
+            preguntas: [
+              'How many languages do you speak? Which ones?',
+              'If you could learn any language instantly, which one would you choose and why?',
+              "Have you ever traveled to a country where you didn't speak the language? Share your experience.",
+            ],
+          },
+          {
+            tema: 'Pets',
+            preguntas: [
+              'Do you have any pets? What are their names?',
+              'What is your favorite pet you have ever owned or interacted with?',
+              'Have you ever had any unusual or exotic pets?',
+            ],
+          },
+          {
+            tema: 'Dreams',
+            preguntas: [
+              "Do you often remember your dreams? Share a memorable dream if you'd like.",
+              'Have you ever had a recurring dream? What was it about?',
+              'Do you believe that dreams can have meanings or symbolism?',
+            ],
+          },
+          {
+            tema: 'Culture',
+            preguntas: [
+              'What aspects of your culture are you most proud of?',
+              'Have you ever traveled to a different culture? What differences stood out to you?',
+              'Do you enjoy learning about other cultures? How do you do it?',
+            ],
+          },
+          {
+            tema: 'Goals',
+            preguntas: [
+              'What are some of your short-term and long-term goals?',
+              'How do you stay motivated to achieve your goals?',
+              'Have you ever accomplished a goal that you initially thought was impossible?',
+            ],
+          },
+          {
+            tema: 'Movies',
+            preguntas: [
+              'What is your all-time favorite movie and why?',
+              'Do you prefer watching movies at home or in the theater? Why?',
+              'Who is your favorite actor or actress? What do you like about their performances?',
+            ],
+          },
+        ];
+
+        // Page elements
+        var temaActualDiv = document.getElementById('tema-actual');
+        var preguntasDiv = document.getElementById('preguntas');
+        var cambiarTemaBtn = document.getElementById('cambiar-tema');
+
+        // Function to get URL parameter value
+        function getParameterByName(name, url) {
+          if (!url) url = window.location.href;
+          name = name.replace(/[\[\]]/g, '\\$&');
+          var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+          if (!results) return null;
+          if (!results[2]) return '';
+          return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Function to display a conversation topic and related questions based on the provided index
+        function displayTopic(topicIndex) {
+          var randomTopic;
+
+          if (
+            topicIndex !== null &&
+            topicIndex >= 0 &&
+            topicIndex < conversationTopics.length
+          ) {
+            randomTopic = conversationTopics[topicIndex];
+          } else {
+            randomTopic =
+              conversationTopics[
+                Math.floor(Math.random() * conversationTopics.length)
+              ];
+          }
+
+          temaActualDiv.textContent = randomTopic.tema;
+
+          // Clear previous questions
+          preguntasDiv.innerHTML = '';
+
+          // Display related questions
+          randomTopic.preguntas.forEach(function (pregunta) {
+            var preguntaElement = document.createElement('p');
+            preguntaElement.textContent = pregunta;
+            preguntasDiv.appendChild(preguntaElement);
+          });
+        }
+
+        // Click event for the button to change the topic
+        cambiarTemaBtn.addEventListener('click', function () {
+          var randomTopicIndex = Math.floor(
+            Math.random() * conversationTopics.length,
+          );
+          var currentURL = window.location.href;
+          var newURL;
+
+          if (currentURL.includes('?')) {
+            newURL = currentURL.replace(
+              /topic=\d+/,
+              'topic=' + randomTopicIndex,
+            );
+          } else {
+            newURL = currentURL + '?topic=' + randomTopicIndex;
+          }
+
+          window.location.href = newURL;
+        });
+
+        // Display a topic based on the URL parameter on page load
+        var topicIndex = getParameterByName('topic');
+        displayTopic(topicIndex);
+      </script>
+    </div>
+
+    <!-- Include Bootstrap and jQuery scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
